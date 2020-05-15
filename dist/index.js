@@ -1035,8 +1035,6 @@ async function run() {
       tag = '';
     }
 
-    core.error(`${tag} is the tag`);
-
     let root;
     if (tag === '') {
       if (remoteExists) {
@@ -1062,8 +1060,6 @@ async function run() {
       root = await cmd('git', `merge-base`, tag, branch);
     }
     root = root.trim();
-
-    core.error(`${root} is the root`);
 
     await cmd('rm', '-f', '.git/index');
     await cmd('git', 'reset');
