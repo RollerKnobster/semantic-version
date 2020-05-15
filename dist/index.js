@@ -965,12 +965,22 @@ const cmd = async (command, ...args) => {
 };
 
 const setOutput = (major, minor, patch, increment, changed, branch) => {
-  const format = core.getInput('format', { required: true });
-  let version = format
+  const main_format = core.getInput('main_format', { required: true });
+  let version = main_format
     .replace('${major}', major)
     .replace('${minor}', minor)
-    .replace('${patch}', patch)
-    .replace('${increment}', increment);
+    .replace('${patch}', patch);
+
+  const increment_format = core.getInput('increment_format', { required: false });
+
+  if (increment_format !== undefined) {
+    let increment_version = increment_format
+      .replace('${increment}', increment);
+
+    if (process.env.GITHUB_REF.includes("pull")) {
+      version += increment_version;
+    }
+  }
 
   const tag = tagPrefix + version;
 
