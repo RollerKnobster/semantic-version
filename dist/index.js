@@ -977,7 +977,10 @@ const setOutput = (major, minor, patch, increment, changed, branch) => {
     let increment_version = increment_format
       .replace('${increment}', increment);
 
-    if (process.env.GITHUB_REF.includes("pull")) {
+    const event_name = process.env.GITHUB_EVENT_NAME;
+
+    core.info(`Triggered by ${event_name}`);
+    if (event_name === "pull_request") {
       version += increment_version;
     }
   }
