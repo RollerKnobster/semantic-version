@@ -1006,10 +1006,10 @@ async function run() {
 
     // const branch = `${remotePrefix}${core.getInput('branch', { required: true })}`;
     let branch = core.getInput('branch', { required: true });
-    if (branch.includes("pull")) {
-        branch = branch.replace("refs", "refs/remotes")
-    }  else if (branch.includes("head")) {
-        branch = branch.replace("refs", "refs/remotes/origin")
+    if (branch.includes("refs/pull/")) {
+        branch = branch.replace("refs/pull/", "refs/remotes/pull/")
+    }  else if (branch.includes("refs/heads/")) {
+        branch = branch.replace("refs/heads/", "refs/remotes/origin")
     }
     const majorPattern = core.getInput('major_pattern', { required: true });
     const minorPattern = core.getInput('minor_pattern', { required: true });
