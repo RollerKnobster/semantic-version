@@ -1103,7 +1103,7 @@ async function run() {
     setOutput(major, minor, patch, increment, changed, branch);
 
   } catch (error) {
-    core.error(error);
+    core.error(error.toString());
     core.setFailed(error.message);
   }
 }
