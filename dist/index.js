@@ -1028,6 +1028,8 @@ async function run() {
     catch (err) {
       tag = '';
     }
+      
+    core.error('${tag} is the tag.')
 
     let root;
     if (tag === '') {
@@ -1054,6 +1056,8 @@ async function run() {
       root = await cmd('git', `merge-base`, tag, branch);
     }
     root = root.trim();
+
+    core.error('${root} is the root.')
 
     const log = await cmd(
       'git',
