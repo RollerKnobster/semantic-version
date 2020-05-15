@@ -992,9 +992,15 @@ async function run() {
   try {
     const remote = await cmd('git', 'remote');
     const remoteExists = remote !== '';
-    const remotePrefix = remoteExists ? 'origin/' : '';
+    // const remotePrefix = remoteExists ? 'origin/' : '';
 
-    const branch = `${remotePrefix}${core.getInput('branch', { required: true })}`;
+    // const branch = `${remotePrefix}${core.getInput('branch', { required: true })}`;
+    const branch = core.getInput('branch', { required: true });
+    if (branch.includes("pull")) {
+        branch.replace("refs", "refs/remotes")
+    }  else if (branch.includes("head")) {
+        branch.replace("refs", "refs/remotes/origin")
+    }
     const majorPattern = core.getInput('major_pattern', { required: true });
     const minorPattern = core.getInput('minor_pattern', { required: true });
     const changePath = core.getInput('change_path') || '';
