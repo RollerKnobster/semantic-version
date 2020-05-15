@@ -21,7 +21,7 @@ const createTestRepo = (inputs) => {
             env[`INPUT_${key.toUpperCase()}`] = allInputs[key];
         }
         return execute(repoDirectory, command, env);
-    }
+    };
 
     // Configure up git user
     run(`git config user.name "Test User"`);
