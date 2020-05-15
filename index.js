@@ -113,6 +113,9 @@ async function run() {
     
     core.error('${root} is the root');
 
+    await cmd('rm', '-f', '.git/index');
+    await cmd('git', 'reset');
+
     const log = await cmd(
       'git',
       'log',
