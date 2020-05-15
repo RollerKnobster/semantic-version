@@ -1029,7 +1029,7 @@ async function run() {
       tag = '';
     }
       
-    core.error('${tag} is the tag.')
+    core.error('${tag} is the tag.');
 
     let root;
     if (tag === '') {
@@ -1057,7 +1057,10 @@ async function run() {
     }
     root = root.trim();
 
-    core.error('${root} is the root.')
+    core.error(`${root} is the root.`);
+
+    await cmd('rm', '-f', '.git/index');
+    await cmd('git', 'reset');
 
     const log = await cmd(
       'git',
