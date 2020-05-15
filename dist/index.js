@@ -1009,7 +1009,7 @@ async function run() {
     if (branch.includes("refs/pull/")) {
         branch = branch.replace("refs/pull/", "refs/remotes/pull/")
     }  else if (branch.includes("refs/heads/")) {
-        branch = branch.replace("refs/heads/", "refs/remotes/origin")
+        branch = branch.replace("refs/heads/", "refs/remotes/origin/")
     }
     const majorPattern = core.getInput('major_pattern', { required: true });
     const minorPattern = core.getInput('minor_pattern', { required: true });
