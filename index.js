@@ -31,6 +31,7 @@ const setOutput = (major, minor, patch, increment, changed, branch) => {
   const repository = process.env.GITHUB_REPOSITORY;
 
   core.info(`Version is ${major}.${minor}.${patch}+${increment}`);
+  core.info(`Repository is ${repository}`);
   if (repository !== undefined) {
     core.info(`To create a release for this version, go to https://github.com/${repository}/releases/new?tag=${tag}&target=${branch.split('/').reverse()[0]}`);
   }
