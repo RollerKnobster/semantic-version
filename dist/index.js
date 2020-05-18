@@ -1024,7 +1024,6 @@ async function run() {
     let major = 0, minor = 0, patch = 0, increment = 0;
     let changed = true;
 
-
     let lastCommitAll = (await cmd('git', 'rev-list', '-n1', '--all')).trim();
 
     if (lastCommitAll === '') {
@@ -1076,9 +1075,6 @@ async function run() {
     }
     root = root.trim();
 
-    await cmd('rm', '-f', '.git/index');
-    await cmd('git', 'reset');
-
     const log = await cmd(
       'git',
       'log',
@@ -1102,6 +1098,10 @@ async function run() {
 
     const majorIndex = history.findIndex(x => x.includes(majorPattern));
     const minorIndex = history.findIndex(x => x.includes(minorPattern));
+
+    core.info(`majorIndex is ${majorIndex}`);
+    core.info(`minorIndex is ${minorIndex}`);
+    core.info(`length is ${history.length}`);
 
     if (majorIndex !== -1) {
       increment = history.length - (majorIndex + 1);
