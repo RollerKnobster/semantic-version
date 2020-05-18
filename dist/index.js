@@ -1096,6 +1096,8 @@ async function run() {
     // Discover the change time from the history log by finding the oldest log
     // that could set the version.
 
+    core.info(history);
+
     const majorIndex = history.findIndex(x => x.includes(majorPattern));
     const minorIndex = history.findIndex(x => x.includes(minorPattern));
 
