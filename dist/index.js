@@ -1090,8 +1090,6 @@ async function run() {
             .trim()
             .split(eol)
             .reverse();
-        core.info("More tags");
-        core.info(tags)
     }
     catch (err) {
         tags = [];
@@ -1105,15 +1103,9 @@ async function run() {
         // no release tags yet, use the initial commit as the root
         root = '';
     } else {
-        core.info("tags");
-        core.info(tags);
         let currentTag = tags[0];
-        core.info("currentTag");
-        core.info(currentTag);
 
         let tagParts = splitTag(currentTag);
-        core.info("tagParts");
-        core.info(tagParts);
 
         const mainValues = tagParts[0];
         const incrementPart = tagParts[1];
@@ -1135,7 +1127,6 @@ async function run() {
 
     // Discover the change time from the history log by finding the oldest log
     // that could set the version.
-    core.info(history);
     const majorIndex = history.findIndex(x => x.toLowerCase().includes(majorPattern));
     const minorIndex = history.findIndex(x => x.toLowerCase().includes(minorPattern));
 
