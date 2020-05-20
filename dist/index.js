@@ -1031,9 +1031,9 @@ async function run() {
         `--tags`,
         `--abbrev=0`,
         `--match=${releasePattern}`,
-        `--excluding=${devPattern}`,
         `${branch}~1`
       )).trim();
+      core.info(tag);
     }
     catch (err) {
       tag = '';
