@@ -1085,7 +1085,8 @@ async function run() {
 
     let tags = [];
     try {
-        tags = (await cmd('git', `tag` )).split();
+        tags = (await cmd('git', `tag` ));
+        core.info(typeof tags);
     }
     catch (err) {
         tags = [];
