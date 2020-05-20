@@ -1057,7 +1057,7 @@ async function run() {
       core.info(delimitedValues);
 
       let mainValues = delimitedValues[0]
-        .split(increment_delimiter);
+        .split('.');
       core.info(mainValues);
 
       major = parseInt(mainValues[0]);
