@@ -1073,7 +1073,8 @@ async function run() {
 
         let major = 0, minor = 0, patch = 0, increment = 0;
 
-        let lastCommitAll = (await cmd('git', 'rev-list', '-n1', '--all')).trim();
+        let lastCommitAll = (await cmd('git', 'rev-list', '-n1', '--all'))
+            .trim();
 
     if (lastCommitAll === '') {
         // empty repo
@@ -1087,7 +1088,7 @@ async function run() {
     try {
         tags = (await cmd('git', `tag` ))
             .trim()
-            .split(/\n/)
+            .split(eol)
             .reverse();
     }
     catch (err) {
