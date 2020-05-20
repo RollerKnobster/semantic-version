@@ -1006,10 +1006,10 @@ async function run() {
     const branch = `${remotePrefix}${core.getInput('branch', { required: true })}`;
     const majorPattern = core.getInput('major_pattern', { required: true }).toLowerCase();
     const minorPattern = core.getInput('minor_pattern', { required: true }).toLowerCase();
+    const patchPattern = core.getInput('patch_pattern', {required: true}).toLowerCase();
     const changePath = core.getInput('change_path') || '';
 
     const releasePattern = `${tagPrefix}*`;
-    const devPattern = `*${increment_delimiter}*`;
     let major = 0, minor = 0, patch = 0, increment = 0;
     let changed = true;
 
@@ -1049,15 +1049,19 @@ async function run() {
     } else {
       // parse the version tag
       let tagParts = tag.split('/');
-      let versionValues = tagParts[tagParts.length - 1]
+      let delimitedValues = tagParts[tagParts.length - 1]
         .substr(tagPrefix.length)
-        .split('.');
+        .split(increment_delimiter);
 
-      major = parseInt(versionValues[0]);
-      minor = versionValues.length > 1 ? parseInt(versionValues[1]) : 0;
-      patch = versionValues.length > 2 ? parseInt(versionValues[2]) : 0;
+      let mainValues = delimitedValues[0]
+        .split(increment_delimiter);
 
-      if (isNaN(major) || isNaN(minor) || isNaN(patch)) {
+      major = parseInt(mainValues[0]);
+      minor = mainValues.length > 1 ? parseInt(mainValues[1]) : 0;
+      patch = mainValues.length > 2 ? parseInt(mainValues[2]) : 0;
+      increment = delimitedValues.length > 1 ? parseInt(delimitedValues[1]) : -1;
+
+      if (isNaN(major) || isNaN(minor) || isNaN(patch) || isNaN(increment)) {
         throw `Invalid tag ${tag}`;
       }
 
@@ -1088,6 +1092,7 @@ async function run() {
 
     const majorIndex = history.findIndex(x => x.toLowerCase().includes(majorPattern));
     const minorIndex = history.findIndex(x => x.toLowerCase().includes(minorPattern));
+    const patchIndex = history.findIndex(x => x.toLowerCase().includes(patchPattern));
 
     if (majorIndex !== -1) {
       increment = history.length - (majorIndex + 1);
@@ -1098,9 +1103,11 @@ async function run() {
       increment = history.length - (minorIndex + 1);
       patch = 0;
       minor++;
-    } else {
-      increment = history.length - 1;
+    } else if (patchIndex !== -1) {
+      increment = history.length - (patchIndex + 1);
       patch++;
+    } else {
+      increment += 1
     }
 
     setOutput(major, minor, patch, increment, changed, branch);
