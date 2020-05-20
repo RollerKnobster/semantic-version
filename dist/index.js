@@ -949,6 +949,7 @@ const exec = __webpack_require__(986);
 const eol = __webpack_require__(87).EOL;
 
 const tagPrefix = core.getInput('tag_prefix') || '';
+const increment_delimiter = core.getInput('increment_delimiter', { required: true });
 
 const cmd = async (command, ...args) => {
   let output = '';
@@ -964,24 +965,31 @@ const cmd = async (command, ...args) => {
   return output;
 };
 
+
 const setOutput = (major, minor, patch, increment, changed, branch) => {
-  const format = core.getInput('format', { required: true });
-  var version = format
+  const main_format = core.getInput('main_format', { required: true });
+  const increment_format = core.getInput('increment_format', { required: true });
+
+  let main_version = main_format
     .replace('${major}', major)
     .replace('${minor}', minor)
-    .replace('${patch}', patch)
+    .replace('${patch}', patch);
+
+  let increment_version = increment_format
     .replace('${increment}', increment);
 
-  const tag = tagPrefix + version;
+  const release_tag = tagPrefix + main_version;
+
+  let version_tag = tagPrefix + main_version + increment_delimiter + increment_version;
 
   const repository = process.env.GITHUB_REPOSITORY;
 
   core.info(`Version is ${major}.${minor}.${patch}+${increment}`);
   if (repository !== undefined) {
-    core.info(`To create a release for this version, go to https://github.com/${repository}/releases/new?tag=${tag}&target=${branch.split('/').reverse()[0]}`);
+    core.info(`To create a release for this version, go to https://github.com/${repository}/releases/new?tag=${release_tag}&target=${branch.split('/').reverse()[0]}`);
   }
-  core.setOutput("tag", tag);
-  core.setOutput("version", version);
+  core.setOutput("tag", version_tag);
+  core.setOutput("version", version_tag);
   core.setOutput("major", major.toString());
   core.setOutput("minor", minor.toString());
   core.setOutput("patch", patch.toString());
@@ -1001,6 +1009,7 @@ async function run() {
     const changePath = core.getInput('change_path') || '';
 
     const releasePattern = `${tagPrefix}*`;
+    const devPattern = `${tagPrefix}*${increment_delimiter}*`;
     let major = 0, minor = 0, patch = 0, increment = 0;
     let changed = true;
 
@@ -1022,6 +1031,7 @@ async function run() {
         `--tags`,
         `--abbrev=0`,
         `--match=${releasePattern}`,
+        `--excluding=${devPattern}`,
         `${branch}~1`
       )).trim();
     }
