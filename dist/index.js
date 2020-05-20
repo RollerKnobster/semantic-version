@@ -1090,6 +1090,8 @@ async function run() {
             .trim()
             .split(eol)
             .reverse();
+        core.info("More tags");
+        core.info(tags)
     }
     catch (err) {
         tags = [];
