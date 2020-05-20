@@ -43,6 +43,8 @@ outputs:
     description: "The version result, in the format {major}.{minor}.{patch}"
   changed:
     description: "Indicates whether there was a change since the last version if change_path was specified. If no change_path was specified this value will always be false."
+  tag:
+    description: "The version result with the tag prefix, in the format {tag_prefix}{major}.{minor}.{patch}"
 runs:
   using: "node12"
   main: "dist/index.js"
