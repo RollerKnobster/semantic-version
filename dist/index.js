@@ -1099,9 +1099,15 @@ async function run() {
         // no release tags yet, use the initial commit as the root
         root = '';
     } else {
+        core.info("tags");
+        core.info(tags);
         let currentTag = tags[0];
+        core.info("currentTag");
+        core.info(currentTag);
 
         let tagParts = splitTag(currentTag);
+        core.info("tagParts");
+        core.info(tagParts);
 
         const mainValues = tagParts[0];
         const incrementPart = tagParts[1];
