@@ -1009,7 +1009,7 @@ async function run() {
     const changePath = core.getInput('change_path') || '';
 
     const releasePattern = `${tagPrefix}*`;
-    const devPattern = `${tagPrefix}*${increment_delimiter}*`;
+    const devPattern = `*${increment_delimiter}*`;
     let major = 0, minor = 0, patch = 0, increment = 0;
     let changed = true;
 
