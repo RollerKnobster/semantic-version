@@ -1105,8 +1105,10 @@ async function run() {
     core.info(minorIndex);
     core.info(patchIndex);
 
-
-    if (majorIndex !== -1) {
+    if (increment !== -1) {
+        increment++;
+    }
+    else if (majorIndex !== -1) {
       increment = history.length - (majorIndex + 1);
       patch = 0;
       minor = 0;
