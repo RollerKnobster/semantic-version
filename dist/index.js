@@ -1085,7 +1085,10 @@ async function run() {
 
     let tags = [];
     try {
-        tags = (await cmd('git', `tag` )).split(/\n/).reverse();
+        tags = (await cmd('git', `tag` ))
+            .trim()
+            .split(/\n/)
+            .reverse();
     }
     catch (err) {
         tags = [];
