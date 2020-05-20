@@ -24,12 +24,10 @@ inputs:
     description: "Pattern to use when formatting main part of output version"
     required: true
     default: "${major}.${minor}.${patch}dev${increment}"
-    # A string to determine the format of the version output
   increment_format:
     description: "Pattern to use when formatting main part of output version"
     required: true
     default: "${major}.${minor}.${patch}dev${increment}"
-    # A string to determine the format of the version output
   increment_delimiter:
     description: "Pattern to use when formatting main part of output version"
     required: true
