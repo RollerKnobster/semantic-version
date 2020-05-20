@@ -1006,7 +1006,6 @@ async function run() {
     const branch = `${remotePrefix}${core.getInput('branch', { required: true })}`;
     const majorPattern = core.getInput('major_pattern', { required: true }).toLowerCase();
     const minorPattern = core.getInput('minor_pattern', { required: true }).toLowerCase();
-    const patchPattern = core.getInput('patch_pattern', {required: true}).toLowerCase();
     const changePath = core.getInput('change_path') || '';
 
     const releasePattern = `${tagPrefix}*`;
@@ -1100,10 +1099,8 @@ async function run() {
     core.info(history);
     const majorIndex = history.findIndex(x => x.toLowerCase().includes(majorPattern));
     const minorIndex = history.findIndex(x => x.toLowerCase().includes(minorPattern));
-    const patchIndex = history.findIndex(x => x.toLowerCase().includes(patchPattern));
     core.info(majorIndex);
     core.info(minorIndex);
-    core.info(patchIndex);
 
     if (increment !== -1) {
         increment++;
@@ -1117,11 +1114,9 @@ async function run() {
       increment = history.length - (minorIndex + 1);
       patch = 0;
       minor++;
-    } else if (patchIndex !== -1) {
-      increment = history.length - (patchIndex + 1);
-      patch++;
     } else {
-      increment++;
+      increment = history.length - 1;
+      patch++;
     }
 
     setOutput(major, minor, patch, increment, changed, branch);
