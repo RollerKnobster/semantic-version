@@ -1049,17 +1049,25 @@ async function run() {
     } else {
       // parse the version tag
       let tagParts = tag.split('/');
+      core.info(tagParts);
       let delimitedValues = tagParts[tagParts.length - 1]
         .substr(tagPrefix.length)
         .split(increment_delimiter);
 
+      core.info(delimitedValues);
+
       let mainValues = delimitedValues[0]
         .split(increment_delimiter);
+      core.info(mainValues);
 
       major = parseInt(mainValues[0]);
+      core.info(major);
       minor = mainValues.length > 1 ? parseInt(mainValues[1]) : 0;
+      core.info(minor);
       patch = mainValues.length > 2 ? parseInt(mainValues[2]) : 0;
+      core.info(patch);
       increment = delimitedValues.length > 1 ? parseInt(delimitedValues[1]) : -1;
+      core.info(increment);
 
       if (isNaN(major) || isNaN(minor) || isNaN(patch) || isNaN(increment)) {
         throw `Invalid tag ${tag}`;
@@ -1096,6 +1104,7 @@ async function run() {
     core.info(majorIndex);
     core.info(minorIndex);
     core.info(patchIndex);
+
 
     if (majorIndex !== -1) {
       increment = history.length - (majorIndex + 1);
