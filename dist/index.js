@@ -1085,7 +1085,7 @@ async function run() {
 
     let tags = [];
     try {
-        tags = (await cmd('git', `tag` )).split(/\n/);
+        tags = (await cmd('git', `tag` )).split(/\n/).reverse();
     }
     catch (err) {
         tags = [];
@@ -1125,10 +1125,11 @@ async function run() {
     }
     root = root.trim();
 
-    let history = getHistory(root, branch);
+    let history = await getHistory(root, branch);
 
     // Discover the change time from the history log by finding the oldest log
     // that could set the version.
+    core.info(history);
     const majorIndex = history.findIndex(x => x.toLowerCase().includes(majorPattern));
     const minorIndex = history.findIndex(x => x.toLowerCase().includes(minorPattern));
 
