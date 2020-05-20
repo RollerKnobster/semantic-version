@@ -1089,10 +1089,13 @@ async function run() {
 
     // Discover the change time from the history log by finding the oldest log
     // that could set the version.
-
+    core.info(history);
     const majorIndex = history.findIndex(x => x.toLowerCase().includes(majorPattern));
     const minorIndex = history.findIndex(x => x.toLowerCase().includes(minorPattern));
     const patchIndex = history.findIndex(x => x.toLowerCase().includes(patchPattern));
+    core.info(majorIndex);
+    core.info(minorIndex);
+    core.info(patchIndex);
 
     if (majorIndex !== -1) {
       increment = history.length - (majorIndex + 1);
@@ -1107,7 +1110,7 @@ async function run() {
       increment = history.length - (patchIndex + 1);
       patch++;
     } else {
-      increment += 1
+      increment++;
     }
 
     setOutput(major, minor, patch, increment, changed, branch);
