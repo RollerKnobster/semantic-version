@@ -1042,16 +1042,16 @@ function bumpRegular(history, majorIndex, minorIndex, major, minor, patch, incre
 }
 
 function bumpSame(history, majorIndex, minorIndex, releaseMajor, releaseMinor, releasePatch, major, minor, patch, increment) {
-    if (majorIndex !== -1 && releaseMajor === major) {
+    if (majorIndex !== -1 && releaseMajor >= major) {
         increment = history.length - (majorIndex + 1);
         patch = 0;
         minor = 0;
         major++;
-    } else if (minorIndex !== -1 && releaseMinor === minor) {
+    } else if (minorIndex !== -1 && releaseMinor >= minor && releaseMajor >= major) {
         increment = history.length - (minorIndex + 1);
         patch = 0;
         minor++;
-    } else if (releasePatch === patch) {
+    } else if (releasePatch >= patch && releaseMinor >= minor && releaseMajor >= major) {
         increment = history.length - 1;
         patch++;
     } else {
