@@ -52,7 +52,7 @@ const execute = (workingDirectory, command, env) => {
         throw e;
     }
 };
-
+// TODO: Fix tests
 // test('Empty repository version is correct', () => {
 //     const repo = createTestRepo(); // 0.0.0+0
 //     var result = repo.runAction();
