@@ -23,15 +23,15 @@ inputs:
   main_format:
     description: "Pattern to use when formatting main part of output version"
     required: true
-    default: "${major}.${minor}.${patch}dev${increment}"
+    default: "${major}.${minor}.${patch}"
   increment_format:
     description: "Pattern to use when formatting main part of output version"
     required: true
-    default: "${major}.${minor}.${patch}dev${increment}"
+    default: "{increment}"
   increment_delimiter:
     description: "Pattern to use when formatting main part of output version"
     required: true
-    default: "${major}.${minor}.${patch}dev${increment}"
+    default: "dev"
 outputs:
   major:
     description: "Current major number"
